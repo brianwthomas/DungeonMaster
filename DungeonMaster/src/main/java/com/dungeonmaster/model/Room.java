@@ -1,13 +1,20 @@
 package com.dungeonmaster.model;
 
-import lombok.Setter;
 import lombok.Getter;
 
-public class Room implements AskHelper {
-	@Getter @Setter private String id;
-	@Getter @Setter private String type;
-	@Getter @Setter private String description;
-	@Getter @Setter private String s3Url;
+public class Room extends AbstractAlexaBase {
+	private String id;
+	@Getter private String description;
+
 	
+	public Room(String description) {
+		this.description = description;
+	}
 	
+	public void setDescription(String description) {
+		this.description = description;
+
+		// set Return speech
+		
+	}
 }
