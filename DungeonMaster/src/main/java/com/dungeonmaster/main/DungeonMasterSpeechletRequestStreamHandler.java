@@ -21,6 +21,7 @@ import com.amazon.speech.speechlet.lambda.SpeechletRequestStreamHandler;
 	         */
 	        supportedApplicationIds = new HashSet<String>();
 	        // supportedApplicationIds.add("[unique-value-here]");
+	        
 	    }
 
 	    public DungeonMasterSpeechletRequestStreamHandler() {
