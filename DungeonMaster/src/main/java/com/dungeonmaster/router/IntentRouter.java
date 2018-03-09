@@ -9,7 +9,8 @@ import com.amazon.speech.speechlet.IntentRequest;
 import com.amazon.speech.speechlet.SpeechletResponse;
 import com.dungeonmaster.api.IntentName;
 import com.dungeonmaster.api.IntentRoute;
-import com.dungeonmaster.intents.TestIntent;
+import com.dungeonmaster.intents.*;
+
 
 public class IntentRouter {
 	
@@ -21,6 +22,7 @@ public class IntentRouter {
 	
 	private void buildRouteTable() {
 		routeTableMap.put(IntentName.TEST, new TestIntent());
+		routeTableMap.put(IntentName.FAIL,  new FailIntent());
 	}
 	
 	public SpeechletResponse route(SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
@@ -28,8 +30,10 @@ public class IntentRouter {
 		IntentRequest request = requestEnvelope.getRequest();	
 		
         Intent intent = request.getIntent();
-        String intentName = (intent != null) ? intent.getName() : null;
-        
-        return routeTableMap.get(intentName).buildResponse(requestEnvelope);		
+        String intentName = (intent != null) ? intent.getName() : IntentName.FAIL;
+        SpeechletResponse r = (routeTableMap.get(intentName) != null) ?
+        		routeTableMap.get(intentName).buildResponse(requestEnvelope) : 
+        			routeTableMap.get(IntentName.FAIL).buildResponse(requestEnvelope);
+        return r;		
 	}
 }
