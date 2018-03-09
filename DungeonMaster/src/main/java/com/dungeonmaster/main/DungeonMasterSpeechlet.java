@@ -13,7 +13,7 @@ import com.amazon.speech.speechlet.SpeechletV2;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
 import com.dungeonmaster.model.DungeonUser;
-import com.dungeonmaster.router.IntentRouter;
+import com.dungeonmaster.router.IntentResolver;
 import com.dungeonmaster.speech.Alexa;
 import com.dungeonmaster.speech.AmazonEffectName;
 import com.dungeonmaster.speech.SSMLSpeech;
@@ -29,7 +29,7 @@ import com.amazonaws.services.dynamodbv2.document.Table;
 
 
 public class DungeonMasterSpeechlet implements SpeechletV2 {
-	IntentRouter router = new IntentRouter();
+	IntentResolver router = new IntentResolver();
 	
 	@Override
 	public SpeechletResponse onIntent(SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {

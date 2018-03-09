@@ -12,11 +12,11 @@ import com.dungeonmaster.api.IntentRoute;
 import com.dungeonmaster.intents.*;
 
 
-public class IntentRouter {
+public class IntentResolver {
 	
 	private Map<String, IntentRoute> routeTableMap = new HashMap<String, IntentRoute>(); 
 	
-	public IntentRouter() {
+	public IntentResolver() {
 		buildRouteTable();
 	}
 	
@@ -29,11 +29,11 @@ public class IntentRouter {
 		
 		IntentRequest request = requestEnvelope.getRequest();	
 		
-        Intent intent = request.getIntent();
-        String intentName = (intent != null) ? intent.getName() : IntentName.FAIL;
-        SpeechletResponse r = (routeTableMap.get(intentName) != null) ?
-        		routeTableMap.get(intentName).buildResponse(requestEnvelope) : 
-        			routeTableMap.get(IntentName.FAIL).buildResponse(requestEnvelope);
-        return r;		
+		Intent intent = request.getIntent();
+		String intentName = (intent != null) ? intent.getName() : IntentName.FAIL;
+		if (routeTableMap.containsKey(intentName))
+			return routeTableMap.get(intentName).buildResponse(requestEnvelope);
+		else
+			return routeTableMap.get(IntentName.FAIL).buildResponse(requestEnvelope); 				
 	}
 }
