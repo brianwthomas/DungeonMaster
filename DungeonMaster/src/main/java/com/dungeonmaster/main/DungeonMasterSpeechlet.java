@@ -13,7 +13,7 @@ import com.amazon.speech.speechlet.SpeechletV2;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
 import com.dungeonmaster.model.DungeonUser;
-import com.dungeonmaster.model.Room;
+import com.dungeonmaster.router.IntentRouter;
 import com.dungeonmaster.speech.Alexa;
 import com.dungeonmaster.speech.AmazonEffectName;
 import com.dungeonmaster.speech.SSMLSpeech;
@@ -29,13 +29,18 @@ import com.amazonaws.services.dynamodbv2.document.Table;
 
 
 public class DungeonMasterSpeechlet implements SpeechletV2 {
-
+	IntentRouter router = new IntentRouter();
+	
 	@Override
 	public SpeechletResponse onIntent(SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
-		IntentRequest request = requestEnvelope.getRequest();
+		IntentRequest request = requestEnvelope.getRequest();	
+		
         Intent intent = request.getIntent();
         String intentName = (intent != null) ? intent.getName() : null;
-		
+        
+        return router.route(requestEnvelope);
+        
+		/*
 		if ("test".equals(intentName))
 		{
 			Reprompt r = new Reprompt();
@@ -44,9 +49,7 @@ public class DungeonMasterSpeechlet implements SpeechletV2 {
 			card.setTitle("Test card");
 			card.setContent("Test content");
 			
-			String mp3 = "https://s3-us-west-2.amazonaws.com/brian.fail/laugh.mp3";
-			
-			return SpeechletResponse.newAskResponse(Alexa.stringToSsmlOutputSpeech("Hello world" + SSMLSpeech.createAudio(mp3)), r, card);
+			return SpeechletResponse.newAskResponse(Alexa.stringToSsmlOutputSpeech("Hello world"), r, card);
 		}
 		else if ("getNameIntent".equals(intentName))
 		{
@@ -75,6 +78,7 @@ public class DungeonMasterSpeechlet implements SpeechletV2 {
 			card.setContent("Get Name");
 			return SpeechletResponse.newAskResponse(Alexa.stringToSsmlOutputSpeech("Shit Broke"), r, card);
 		}
+		*/
 	}
 
 	@Override
