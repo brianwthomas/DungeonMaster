@@ -12,6 +12,7 @@ import com.amazon.speech.speechlet.SpeechletV2;
 
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
+import com.dungeonmaster.api.Launch;
 import com.dungeonmaster.model.DungeonUser;
 import com.dungeonmaster.router.IntentResolver;
 import com.dungeonmaster.speech.Alexa;
@@ -33,10 +34,6 @@ public class DungeonMasterSpeechlet implements SpeechletV2 {
 	
 	@Override
 	public SpeechletResponse onIntent(SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
-		IntentRequest request = requestEnvelope.getRequest();	
-		
-        Intent intent = request.getIntent();
-        String intentName = (intent != null) ? intent.getName() : null;
         
         return router.route(requestEnvelope);
         
@@ -84,12 +81,8 @@ public class DungeonMasterSpeechlet implements SpeechletV2 {
 	@Override
 	public SpeechletResponse onLaunch(SpeechletRequestEnvelope<LaunchRequest> requestEnvelope) {
 		// TODO Auto-generated method stub
-		Reprompt r = new Reprompt();
-		r.setOutputSpeech(Alexa.stringToSsmlOutputSpeech(""));			
-		SimpleCard card = new SimpleCard();
-		card.setTitle("Get Name Card");
-		card.setContent("Get Name");
-		return SpeechletResponse.newAskResponse(Alexa.stringToSsmlOutputSpeech("Welcome to Dungeon Master"), r, card);
+		Launch l = new Launch(requestEnvelope);
+		return l.buildResponse();
 		
 		
 	}
